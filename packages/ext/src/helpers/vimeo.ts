@@ -27,6 +27,45 @@ export default class VimeoHelper extends BaseHelper {
     );
   }
 
+  toPublicUrl(videoId: string) {
+    const [id, hash] = videoId.split(":", 2);
+    return hash
+      ? `${this.DEFAULT_SITE_ORIGIN}/${id}/${hash}`
+      : `${this.DEFAULT_SITE_ORIGIN}/${id}`;
+  }
+
+  returnPublicBaseData(videoId: string) {
+    const baseData = this.returnBaseData(videoId);
+    if (!baseData) {
+      return undefined;
+    }
+
+    return {
+      ...baseData,
+      url: this.toPublicUrl(videoId),
+    };
+  }
+
+  normalizePublicVideoUrl(url: string, videoId: string) {
+    try {
+      const parsed = new URL(url);
+      if (parsed.hostname === "player.vimeo.com") {
+        return this.toPublicUrl(videoId);
+      }
+
+      if (parsed.hostname.endsWith("vimeo.com")) {
+        const colonMatch = /^\/(\d+):([a-z0-9]+)$/i.exec(parsed.pathname);
+        if (colonMatch) {
+          return `${this.DEFAULT_SITE_ORIGIN}/${colonMatch[1]}/${colonMatch[2]}`;
+        }
+      }
+    } catch {
+      // return original value on parse errors
+    }
+
+    return url;
+  }
+
   async getViewerData() {
     try {
       const res = await this.fetch("https://vimeo.com/_next/viewer");
@@ -218,7 +257,7 @@ export default class VimeoHelper extends BaseHelper {
     }
 
     if (!this.extraInfo) {
-      return this.returnBaseData(videoId);
+      return this.returnPublicBaseData(videoId);
     }
 
     if (videoId.includes("/")) {
@@ -228,12 +267,12 @@ export default class VimeoHelper extends BaseHelper {
 
     const viewerData = await this.getViewerData();
     if (!viewerData) {
-      return this.returnBaseData(videoId);
+      return this.returnPublicBaseData(videoId);
     }
 
     const videoInfo = await this.getVideoInfo(videoId);
     if (!videoInfo) {
-      return this.returnBaseData(videoId);
+      return this.returnPublicBaseData(videoId);
     }
 
     const subsData = await this.getSubsInfo(videoId);
@@ -248,7 +287,8 @@ export default class VimeoHelper extends BaseHelper {
         }) as VideoDataSubtitle,
     );
 
-    const { link: url, duration, name: title, description } = videoInfo;
+    const { link, duration, name: title, description } = videoInfo;
+    const url = this.normalizePublicVideoUrl(link, videoId);
     return {
       url,
       title,
@@ -260,7 +300,8 @@ export default class VimeoHelper extends BaseHelper {
 
   // eslint-disable-next-line @typescript-eslint/require-await
   async getVideoId(url: URL) {
-    const embedId = /video\/[^/]+$/.exec(url.pathname)?.[0];
+    const normalizedPathname = url.pathname.replace(/\/+$/, "");
+    const embedId = /video\/[^/]+$/.exec(normalizedPathname)?.[0];
     if (this.isPrivatePlayer()) {
       return embedId;
     }
@@ -273,13 +314,13 @@ export default class VimeoHelper extends BaseHelper {
     }
 
     const categoriesVideoId =
-      /channels\/[^/]+\/([^/]+)/.exec(url.pathname)?.[1] ??
-      /groups\/[^/]+\/videos\/([^/]+)/.exec(url.pathname)?.[1] ??
-      /(showcase|album)\/[^/]+\/video\/([^/]+)/.exec(url.pathname)?.[2];
+      /channels\/[^/]+\/([^/]+)/.exec(normalizedPathname)?.[1] ??
+      /groups\/[^/]+\/videos\/([^/]+)/.exec(normalizedPathname)?.[1] ??
+      /(showcase|album)\/[^/]+\/video\/([^/]+)/.exec(normalizedPathname)?.[2];
     if (categoriesVideoId) {
       return categoriesVideoId;
     }
 
-    return /([^/]+\/)?[^/]+$/.exec(url.pathname)?.[0];
+    return /([^/]+\/)?[^/]+$/.exec(normalizedPathname)?.[0];
   }
 }

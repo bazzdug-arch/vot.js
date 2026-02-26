@@ -4,7 +4,6 @@ import {
   type ServiceMatch,
 } from "@vot.js/core/types/service";
 import { localLinkRe, VideoDataError } from "@vot.js/core/utils/videoData";
-import { buildVkVideoUrl } from "@vot.js/shared/utils/utils";
 
 import sites from "../data/sites";
 import VideoHelper, {
@@ -16,6 +15,21 @@ import type { ServiceConf, VideoService } from "../types/service";
 
 function hasHelper(host: string): host is keyof AvailableVideoHelpers {
   return host in availableHelpers;
+}
+
+function buildVkVideoUrl(videoId: string, sourceUrl: URL): string {
+  const cleanedVideoId = videoId.replace(/^\/+/, "");
+  const out = new URL("https://vk.com/video");
+  out.searchParams.set("z", cleanedVideoId);
+
+  for (const key of ["list", "access_key"]) {
+    const value = sourceUrl.searchParams.get(key);
+    if (value) {
+      out.searchParams.set(key, value);
+    }
+  }
+
+  return out.toString();
 }
 
 export function getService() {
@@ -75,6 +89,7 @@ export async function getVideoData(
     [
       CoreVideoService.peertube,
       CoreVideoService.coursehunterLike,
+      CoreVideoService.bunnystream,
       CoreVideoService.cloudflarestream,
     ].includes(service.host as CoreVideoService)
   ) {

@@ -59,6 +59,7 @@ export enum VideoService {
   incestflix = "incestflix",
   porntn = "porntn",
   dzen = "dzen",
+  bunnystream = "bunnystream",
   cloudflarestream = "cloudflarestream",
   loom = "loom",
   rtnews = "rtnews",

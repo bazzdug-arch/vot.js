@@ -346,6 +346,15 @@ export default [
     match: /^dzen.ru$/,
   },
   {
+    host: CoreVideoService.bunnystream,
+    url: "stub",
+    match: [
+      /^video\.bunnycdn\.com$/,
+      /^iframe\.mediadelivery\.net$/,
+      /^(?:[^.]+\.)*b-cdn\.net$/,
+    ],
+  },
+  {
     host: CoreVideoService.cloudflarestream,
     url: "stub",
     match: /^(watch|embed|iframe|customer-[^.]+).cloudflarestream.com$/,

@@ -227,36 +227,19 @@ export function proxyMedia(url: URL | string, format: "mp4" | "webm" = "mp4") {
 }
 
 /**
- * Build a canonical VK video URL that is compatible with tools like yt-dlp.
+ * Build a canonical VK video URL.
  *
- * VK uses multiple URL shapes (vk.com, vkvideo.ru, query-based `video?z=...`).
- * For download/extraction tooling, the path-based form is the most reliable:
- *   https://vkvideo.ru/video-<ownerId>_<videoId>
- *   https://vkvideo.ru/clip-<ownerId>_<clipId>
+ * VK uses multiple URL shapes (`vk.com`, `vkvideo.ru`, path-based ids and
+ * `video?z=...`). Inside this project we normalize to:
+ *   https://vk.com/video?z=<video-or-clip-id>
  *
- * Some videos require extra query parameters (e.g. `list`, `access_key`) to be
- * accessible; we preserve these when present.
+ * Some entries require additional query params to be accessible; preserve the
+ * known access-affecting ones.
  */
 export function buildVkVideoUrl(videoId: string, sourceUrl: URL): string {
-  const protocol = "https:";
-  const hostname = sourceUrl.hostname.replace(/^m\./, "");
   const cleanedVideoId = videoId.replace(/^\/+/, "");
-
-  // Prefer keeping the VK domain family, but normalize mobile subdomains.
-  const canonicalHost = hostname.endsWith("vkvideo.ru")
-    ? "vkvideo.ru"
-    : hostname.endsWith("vk.com") || hostname.endsWith("vk.ru")
-      ? "vk.com"
-      : hostname;
-
-  const pathname = sourceUrl.pathname.replace(/\/+$/, "");
-  const pathAlreadyContainsId = /^\/(?:video|clip)-?\d+_\d+$/.test(pathname);
-
-  const base = pathAlreadyContainsId
-    ? `${protocol}//${canonicalHost}${pathname}`
-    : `${protocol}//${canonicalHost}/${cleanedVideoId}`;
-
-  const out = new URL(base);
+  const out = new URL("https://vk.com/video");
+  out.searchParams.set("z", cleanedVideoId);
 
   // Preserve only params that are known to affect access / resolution.
   for (const key of ["list", "access_key"]) {

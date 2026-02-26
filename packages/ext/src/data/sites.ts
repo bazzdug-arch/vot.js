@@ -16,9 +16,8 @@ const sharedSelectors = {
   idPlayer: "#player",
   jwPlayer: ".jwplayer, .jw-media",
   player: ".player",
-  videoJsUniversal:
-    "video-js, .video-js:not(video), .vjs-player, [data-vjs-player], [id^='vjs_video_']:not(video)",
-  vkVideoPlayer: "vk-video-player",
+  videoJsUniversal: "[id^='vjs_video_']:not([id*='_html5_api']):not(video), video-js:not([id*='_html5_api']), .video-js:not(video):not([id*='_html5_api']), .vjs-player:not([id*='_html5_api']), [data-vjs-player]:not([id*='_html5_api'])",
+  vkVideoPlayer: ".videoplayer_media, vk-video-player",
 } as const;
 
 export default [
@@ -195,7 +194,7 @@ export default [
     url: "https://olympics.com/",
     match: (url: URL) =>
       /^(www\.)?olympics\.com$/.test(url.host) &&
-      /^\/[a-z]{2}\/(?:paris-2024\/)?(?:replay|videos?|original-series\/episode)\/[\w-]+\/?$/i.test(
+      /^\/[a-z]{2}\/(?:[a-z0-9-]+\/)?(?:replay|videos?|original-series\/episode)\/[\w-]+\/?$/i.test(
         url.pathname,
       ),
     selector: sharedSelectors.videoJsUniversal,
@@ -307,7 +306,8 @@ export default [
   {
     host: CoreVideoService.dailymotion,
     url: "https://www.dailymotion.com/video/",
-    match: /^((www\.)?dailymotion\.com|geo(\d+)?\.dailymotion\.com|dai\.ly)$/,
+    match:
+      /^((www\.|player\.)?dailymotion\.com|geo(\d+)?\.dailymotion\.com|dai\.ly)$/,
     selector: sharedSelectors.player,
   },
   {
@@ -365,8 +365,12 @@ export default [
         /^\/show\/?$/.test(url.pathname) &&
         /^\d+:(?:[\da-f]{32}|\d{16,})$/i.test(
           url.searchParams.get("fid") ?? "",
-        )),
-    selector: `#playVideo, sharedSelectors.videoJsUniversal`,
+        )) ||
+      (/^(?:www\.)?weibo\.com$/.test(url.host) &&
+        /^\/newlogin\/?$/.test(url.pathname) &&
+        (url.searchParams.has("url") ||
+          /^[A-Za-z0-9]+$/.test(url.searchParams.get("layerid") ?? ""))),
+        selector: sharedSelectors.videoJsUniversal  || "#playVideo",
   },
   {
     host: CoreVideoService.newgrounds,
@@ -518,7 +522,17 @@ export default [
     host: CoreVideoService.dzen,
     url: "https://dzen.ru/video/watch/",
     match: /^dzen.ru$/,
-    selector: ".zen-ui-video-video-player",
+    selector: `[class*="player__playerWrap"] > div`,
+  },
+  {
+    host: CoreVideoService.bunnystream,
+    url: "stub",
+    match: [
+      /^video\.bunnycdn\.com$/,
+      /^iframe\.mediadelivery\.net$/,
+      /^(?:[^.]+\.)*b-cdn\.net$/,
+    ],
+    selector: null,
   },
   {
     host: CoreVideoService.cloudflarestream,

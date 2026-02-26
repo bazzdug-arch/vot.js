@@ -9,6 +9,7 @@ import BilibiliHelper from "./bilibili";
 import BitchuteHelper from "./bitchute";
 import BitviewHelper from "./bitview";
 import BunkrHelper from "./bunkr";
+import BunnyStreamHelper from "./bunnystream";
 import CloudflareStreamHelper from "./cloudflarestream";
 import CoursehunterLikeHelper from "./coursehunterLike";
 import DailymotionHelper from "./dailymotion";
@@ -69,6 +70,7 @@ export * as BilibiliHelper from "./bilibili";
 export * as BitchuteHelper from "./bitchute";
 export * as BitviewHelper from "./bitview";
 export * as BunkrHelper from "./bunkr";
+export * as BunnyStreamHelper from "./bunnystream";
 export * as CloudflareStreamHelper from "./cloudflarestream";
 export * as CoursehunterLikeHelper from "./coursehunterLike";
 export * as DailymotionHelper from "./dailymotion";
@@ -175,6 +177,7 @@ export const availableHelpers = {
   [CoreVideoService.piped]: YoutubeHelper,
   [CoreVideoService.zdf]: ZDFHelper,
   [CoreVideoService.dzen]: DzenHelper,
+  [CoreVideoService.bunnystream]: BunnyStreamHelper,
   [CoreVideoService.cloudflarestream]: CloudflareStreamHelper,
   [CoreVideoService.loom]: LoomHelper,
   [CoreVideoService.rtnews]: RtNewsHelper,

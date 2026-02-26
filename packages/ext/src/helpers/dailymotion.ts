@@ -1,21 +1,26 @@
 import { BaseHelper } from "./base";
 
 export default class DailymotionHelper extends BaseHelper {
-  async getVideoId(_url: URL): Promise<string | undefined> {
-    return new Promise((resolve) => {
-      const origin = "https://www.dailymotion.com";
-      const timeout = setTimeout(() => resolve(undefined), 3000);
+  getVideoIdFromUrl(url: URL): string | undefined {
+    if (url.hostname === "dai.ly") {
+      return url.pathname.split("/").filter(Boolean)?.[0];
+    }
 
-      window.addEventListener("message", (e) => {
-        if (e.origin !== origin) return;
-        if (typeof e.data !== "object" || e.data?.type !== "dailymotionVideoId")
-          return;
+    const videoIdFromQuery = url.searchParams.get("video");
+    if (videoIdFromQuery) {
+      return videoIdFromQuery;
+    }
 
-        clearTimeout(timeout);
-        resolve(e.data.videoId);
-      });
+    return (
+      /(?:^|\/)video\/([^/]+)/.exec(url.pathname)?.[1] ??
+      /(?:^|\/)player\/([^/.]+)/.exec(url.pathname)?.[1]
+    );
+  }
 
-      window.top?.postMessage({ type: "getDailymotionVideoId" }, origin);
-    });
+  async getVideoId(url: URL): Promise<string | undefined> {
+    const parsedVideoId = this.getVideoIdFromUrl(url);
+    if (parsedVideoId) {
+      return parsedVideoId;
+    }
   }
 }

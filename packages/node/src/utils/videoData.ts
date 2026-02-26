@@ -88,6 +88,7 @@ export async function getVideoData(
     [
       CoreVideoService.peertube,
       CoreVideoService.coursehunterLike,
+      CoreVideoService.bunnystream,
       CoreVideoService.cloudflarestream,
     ].includes(service.host)
   ) {
