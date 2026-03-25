@@ -12,11 +12,13 @@ import { ExtVideoService, type ServiceConf } from "../types/service";
 const sharedSelectors = {
   bilibiliPlayer:
     ".bpx-player-video-wrap, div.player-mobile-box.player-mobile-autoplay",
-  flowplayer: ".fp-player",
+  flowplayer: ".fp-player, div.flowplayer",
   idPlayer: "#player",
   jwPlayer: ".jwplayer, .jw-media",
   player: ".player",
-  videoJsUniversal: "[id^='vjs_video_']:not([id*='_html5_api']):not(video), video-js:not([id*='_html5_api']), .video-js:not(video):not([id*='_html5_api']), .vjs-player:not([id*='_html5_api']), [data-vjs-player]:not([id*='_html5_api'])",
+  shakaPlayer: '.shaka-video-container, [id^="shaka-video-container-"]',
+  videoJsUniversal:
+    "[id^='vjs_video_']:not([id*='_html5_api']):not(video), video-js:not([id*='_html5_api']), .video-js:not(video):not([id*='_html5_api']), .vjs-player:not([id*='_html5_api']), [data-vjs-player]:not([id*='_html5_api'])",
   vkVideoPlayer: ".videoplayer_media, vk-video-player",
 } as const;
 
@@ -27,6 +29,15 @@ export default [
     url: "https://youtu.be/",
     match: /^m.youtube.com$/,
     selector: ".player-container",
+    needExtraData: true,
+  },
+  {
+    host: CoreVideoService.youtube,
+    url: "https://youtu.be/",
+    match: (enteredUrl) =>
+      /^(www.)?youtube(-nocookie|kids)?.com$/.test(enteredUrl.hostname) &&
+      enteredUrl.pathname.startsWith("/tv"),
+    selector: "#container",
     needExtraData: true,
   },
   {
@@ -47,8 +58,15 @@ export default [
     host: CoreVideoService.piped,
     url: "https://youtu.be/",
     match: sitesPiped,
-    selector: ".shaka-video-container",
+    selector: sharedSelectors.shakaPlayer,
     needBypassCSP: true,
+  },
+  {
+    host: CoreVideoService.preservetube,
+    url: "https://preservetube.com/",
+    match: /^preservetube\.com$/,
+    selector: "div.video-wrapper",
+    needExtraData: true,
   },
   {
     host: CoreVideoService.zdf,
@@ -219,15 +237,14 @@ export default [
     host: CoreVideoService.twitter,
     url: "https://twitter.com/i/status/",
     match: /^(twitter|x).com$/,
-    selector: 'div[data-testid="videoComponent"] > div:nth-child(1) > div',
-    eventSelector: 'div[data-testid="videoPlayer"]',
+    selector: 'div[data-testid="videoComponent"]',
     needBypassCSP: true,
   },
   {
     host: CoreVideoService.rumble,
     url: "https://rumble.com/",
     match: /^rumble.com$/,
-    selector: "#videoPlayer > .videoPlayer-Rumble-cls > div",
+    selector: `[id^="vid_"] > div`,
   },
   {
     host: CoreVideoService.facebook,
@@ -250,7 +267,7 @@ export default [
     host: CoreVideoService.rutube,
     url: "https://rutube.ru/video/",
     match: /^rutube.ru$/,
-    selector: ".video-player > div > div > div:nth-child(2)",
+    selector: `div[class*="videoWrapper"]`,
   },
   {
     additionalData: "embed",
@@ -370,7 +387,7 @@ export default [
         /^\/newlogin\/?$/.test(url.pathname) &&
         (url.searchParams.has("url") ||
           /^[A-Za-z0-9]+$/.test(url.searchParams.get("layerid") ?? ""))),
-        selector: sharedSelectors.videoJsUniversal  || "#playVideo",
+    selector: sharedSelectors.videoJsUniversal || "#playVideo",
   },
   {
     host: CoreVideoService.newgrounds,
@@ -462,7 +479,7 @@ export default [
     host: CoreVideoService.coursehunterLike,
     url: "stub",
     match: sitesCoursehunterLike,
-    selector: "#oframeplayer > pjsdiv:has(video)",
+    selector: null,
     needExtraData: true,
   },
   {
@@ -478,8 +495,15 @@ export default [
     host: ExtVideoService.udemy,
     url: "https://www.udemy.com/",
     match: /udemy.com$/,
-    selector:
-      'div[data-purpose="curriculum-item-viewer-content"] > section > div > div > div > div:nth-of-type(2)',
+    selector: sharedSelectors.shakaPlayer,
+    needExtraData: true,
+  },
+  {
+    host: ExtVideoService.datacamp,
+    url: "https://www.datacamp.com/courses/",
+    match: (url) =>
+      /^(?:campus\.|projector\.)?datacamp\.com$/.test(url.hostname),
+    selector: sharedSelectors.videoJsUniversal,
     needExtraData: true,
   },
   {
@@ -494,6 +518,12 @@ export default [
     host: CoreVideoService.watchpornto,
     url: "https://watchporn.to/",
     match: /^watchporn.to$/,
+    selector: sharedSelectors.flowplayer,
+  },
+  {
+    host: CoreVideoService.jove,
+    url: "https://jove.com/",
+    match: /^(?:app|www)\.jove\.com$/,
     selector: sharedSelectors.flowplayer,
   },
   {
@@ -640,6 +670,13 @@ export default [
     url: "https://www.netacad.com/",
     match: /^(www\.)?netacad\.com/,
     selector: sharedSelectors.videoJsUniversal,
+    needExtraData: true,
+  },
+  {
+    host: ExtVideoService.mediafile,
+    url: "https://mediafile.cc/",
+    match: /^(www\.)?mediafile\.cc$/,
+    selector: "div#playerContainer",
     needExtraData: true,
   },
   {

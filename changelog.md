@@ -1,3 +1,59 @@
+# 2.4.16
+
+## Ext
+
+- Added support for PreserveTube (`preservetube.com`)
+- Added support for Jove (`app.jove.com`, `www.jove.com`)
+- Added support for DataCamp (`datacamp.com`, `campus.datacamp.com`, `projector.datacamp.com`)
+- Added support for Mediafile (`mediafile.cc`)
+- Improved YouTube URL normalization for `youtu.be`, hash-based TV/share routes, and embedded player URLs
+- Added Dailymotion video-id resolution for embedded iframe flows via `postMessage`
+- Improved Udemy lecture ID extraction for `/lecture/view/` URLs and `lectureId` / `lecture_id` query params
+- Expanded player detection for Flowplayer, Rumble, Coursehunter-like sites, and related selectors
+
+## Node
+
+- Added support for PreserveTube (`preservetube.com`) and Jove (`app.jove.com`, `www.jove.com`)
+- Improved YouTube URL normalization for `youtu.be` and hash-based TV/share routes
+- Normalized Vimeo subtitle URLs using proper relative URL resolution
+
+## Core
+
+- Added new `VideoService` values: `preservetube`, `jove`
+
+## Shared
+
+- Updated runtime config
+
+# 2.4.15
+
+## Ext
+
+- Added support BunnyStream (`video.bunnycdn.com`, `iframe.mediadelivery.net`, `*.b-cdn.net`)
+- Added `BunnyStreamHelper` and direct video-id URL handling for BunnyStream
+- Refactored Dailymotion video ID extraction from URL (`dai.ly`, `/video/`, `/player/`, `video` query param)
+- Improved selectors for Video.js, VK and Dzen players
+- Expanded Olympics Replay URL matching to support extra path segments
+- Improved Peertube ID normalization to canonical `/videos/watch/<id>` format
+- Improved Weibo ID extraction for wrapped `/newlogin` URLs and `layerid` fallback
+- Reworked Udemy extraction (`view_html` parsing, output/stream/download candidates, quality prioritization and subtitle locale handling)
+- Improved Vimeo URL normalization and fallback data handling for public/private IDs
+
+## Node
+
+- Added support BunnyStream (`video.bunnycdn.com`, `iframe.mediadelivery.net`, `*.b-cdn.net`)
+- Added `BunnyStreamHelper` and direct video-id URL handling for BunnyStream
+- Expanded Olympics Replay URL matching to support extra path segments
+- Improved Weibo ID extraction for wrapped `/newlogin` URLs and `layerid` fallback
+
+## Core
+
+- Added new `VideoService` value: `bunnystream`
+
+## Shared
+
+- Updated `buildVkVideoUrl` canonicalization to `https://vk.com/video?z=...` with preserved `list` and `access_key` params
+
 # 2.4.14
 
 ## Ext

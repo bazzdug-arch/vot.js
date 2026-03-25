@@ -21,7 +21,7 @@
     },
     "packages/core": {
       "name": "@vot.js/core",
-      "version": "2.4.14",
+      "version": "2.4.16",
       "dependencies": {
         "@vot.js/shared": "workspace:^",
       },
@@ -35,7 +35,7 @@
     },
     "packages/ext": {
       "name": "@vot.js/ext",
-      "version": "2.4.14",
+      "version": "2.4.16",
       "dependencies": {
         "@vot.js/core": "workspace:^",
         "@vot.js/shared": "workspace:^",
@@ -50,7 +50,7 @@
     },
     "packages/node": {
       "name": "@vot.js/node",
-      "version": "2.4.14",
+      "version": "2.4.16",
       "dependencies": {
         "@vot.js/core": "workspace:^",
         "@vot.js/shared": "workspace:^",
@@ -67,7 +67,7 @@
     },
     "packages/shared": {
       "name": "@vot.js/shared",
-      "version": "2.4.14",
+      "version": "2.4.16",
       "dependencies": {
         "@bufbuild/protobuf": "^2.0.0",
       },

@@ -17,6 +17,54 @@ export default class YoutubeHelper extends BaseHelper {
     return /^m\.youtube\.com$/.test(window.location.hostname);
   }
 
+  private static extractVideoId(url: URL): string | undefined {
+    const rawHash = url.hash.replace(/^#/, "");
+    if (rawHash) {
+      const normalizedHash = rawHash.startsWith("!")
+        ? rawHash.slice(1)
+        : rawHash;
+      let decodedHash = normalizedHash;
+      try {
+        decodedHash = decodeURIComponent(normalizedHash);
+      } catch {
+        // ignore malformed URL-encoding
+      }
+
+      try {
+        const hashUrl = decodedHash.startsWith("http")
+          ? new URL(decodedHash)
+          : new URL(
+              decodedHash.startsWith("/") ? decodedHash : `/${decodedHash}`,
+              url.origin,
+            );
+
+        const hashVideoId = YoutubeHelper.extractVideoId(hashUrl);
+        if (hashVideoId) {
+          return hashVideoId;
+        }
+      } catch {
+        const hashVideoId = /(?:^|[?&#])v=([^&#]+)/.exec(decodedHash)?.[1];
+        if (hashVideoId) {
+          return hashVideoId;
+        }
+      }
+    }
+
+    if (url.hostname === "youtu.be") {
+      const id = url.pathname.replace(/^\/+/, "").split("/")[0];
+      return id || undefined;
+    }
+
+    const pathVideoId =
+      /\/(?:watch|embed|shorts|live|v|e)\/([^/?#]+)/.exec(url.pathname)?.[1] ??
+      undefined;
+    if (pathVideoId) {
+      return pathVideoId;
+    }
+
+    return url.searchParams.get("v") ?? undefined;
+  }
+
   static getPlayer() {
     if (
       window.location.pathname.startsWith("/shorts/") &&
@@ -253,17 +301,11 @@ export default class YoutubeHelper extends BaseHelper {
 
   // eslint-disable-next-line @typescript-eslint/require-await
   async getVideoId(url: URL) {
-    if (url.hostname === "youtu.be") {
-      url.search = `?v=${url.pathname.replace("/", "")}`;
-      url.pathname = "/watch";
-    }
-
     if (url.searchParams.has("enablejsapi")) {
       const videoUrl = YoutubeHelper.getPlayer()?.getVideoUrl();
       url = videoUrl ? new URL(videoUrl) : url;
     }
 
-    return (/(?:watch|embed|shorts|live)\/([^/]+)/.exec(url.pathname)?.[1] ??
-      url.searchParams.get("v")) as string | undefined;
+    return YoutubeHelper.extractVideoId(url);
   }
 }

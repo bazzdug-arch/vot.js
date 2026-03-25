@@ -16,6 +16,7 @@ import CloudflareStreamHelper from "./cloudflarestream";
 import CoursehunterLikeHelper from "./coursehunterLike";
 import CourseraHelper from "./coursera";
 import DailymotionHelper from "./dailymotion";
+import DataCampHelper from "./datacamp";
 import DeeplearningAIHelper from "./deeplearningai";
 import DouyinHelper from "./douyin";
 import DzenHelper from "./dzen";
@@ -27,12 +28,14 @@ import GoogleDriveHelper from "./googledrive";
 import IgnHelper from "./ign";
 import IMDBHelper from "./imdb";
 import IncestflixHelper from "./incestflix";
+import JoveHelper from "./jove";
 import KickHelper from "./kick";
 import KickstarterHelper from "./kickstarter";
 import KodikHelper from "./kodik";
 import LinkedinHelper from "./linkedin";
 import LoomHelper from "./loom";
 import MailRuHelper from "./mailru";
+import MediafileHelper from "./mediafile";
 import NetacadHelper from "./netacad";
 import NewgroundsHelper from "./newgrounds";
 import NicoNicoHelper from "./niconico";
@@ -46,6 +49,7 @@ import PeertubeHelper from "./peertube";
 import PicartoHelper from "./picarto";
 import PornhubHelper from "./pornhub";
 import PornTNHelper from "./porntn";
+import PreserveTubeHelper from "./preservetube";
 import RedditHelper from "./reddit";
 import RtNewsHelper from "./rtnews";
 import Rule34VideoHelper from "./rule34video";
@@ -85,6 +89,7 @@ export * as CloudflareStreamHelper from "./cloudflarestream";
 export * as CoursehunterLikeHelper from "./coursehunterLike";
 export * as CourseraHelper from "./coursera";
 export * as DailymotionHelper from "./dailymotion";
+export * as DataCampHelper from "./datacamp";
 export * as DeeplearningAIHelper from "./deeplearningai";
 export * as DouyinHelper from "./douyin";
 export * as DzenHelper from "./dzen";
@@ -96,12 +101,14 @@ export * as GoogleDriveHelper from "./googledrive";
 export * as IgnHelper from "./ign";
 export * as IMDBHelper from "./imdb";
 export * as IncestflixHelper from "./incestflix";
+export * as JoveHelper from "./jove";
 export * as KickHelper from "./kick";
 export * as KickstarterHelper from "./kickstarter";
 export * as KodikHelper from "./kodik";
 export * as LinkedinHelper from "./linkedin";
 export * as LoomHelper from "./loom";
 export * as MailRuHelper from "./mailru";
+export * as MediafileHelper from "./mediafile";
 export * as NetacadHelper from "./netacad";
 export * as NewgroundsHelper from "./newgrounds";
 export * as NicoNicoHelper from "./niconico";
@@ -115,6 +122,7 @@ export * as PeertubeHelper from "./peertube";
 export * as PicartoHelper from "./picarto";
 export * as PornhubHelper from "./pornhub";
 export * as PornTNHelper from "./porntn";
+export * as PreserveTubeHelper from "./preservetube";
 export * as RedditHelper from "./reddit";
 export * as RtNewsHelper from "./rtnews";
 export * as Rule34VideoHelper from "./rule34video";
@@ -157,6 +165,7 @@ export const availableHelpers = {
   [CoreVideoService.coursehunterLike]: CoursehunterLikeHelper,
   [CoreVideoService.twitch]: TwitchHelper,
   [CoreVideoService.sap]: SapHelper,
+  [CoreVideoService.jove]: JoveHelper,
   [CoreVideoService.linkedin]: LinkedinHelper,
   [CoreVideoService.vimeo]: VimeoHelper,
   [CoreVideoService.yandexdisk]: YandexDiskHelper,
@@ -191,6 +200,7 @@ export const availableHelpers = {
   [CoreVideoService.proxitok]: TikTokHelper,
   [CoreVideoService.nine_gag]: NineGAGHelper,
   [CoreVideoService.youtube]: YoutubeHelper,
+  [CoreVideoService.preservetube]: PreserveTubeHelper,
   [CoreVideoService.invidious]: YoutubeHelper,
   [CoreVideoService.piped]: YoutubeHelper,
   [CoreVideoService.zdf]: ZDFHelper,
@@ -211,9 +221,11 @@ export const availableHelpers = {
   [ExtVideoService.douyin]: DouyinHelper,
   [ExtVideoService.artstation]: ArtstationHelper,
   [ExtVideoService.kickstarter]: KickstarterHelper,
+  [ExtVideoService.datacamp]: DataCampHelper,
   [ExtVideoService.oraclelearn]: OracleLearnHelper,
   [ExtVideoService.deeplearningai]: DeeplearningAIHelper,
   [ExtVideoService.netacad]: NetacadHelper,
+  [ExtVideoService.mediafile]: MediafileHelper,
 };
 
 export type AvailableVideoHelpers = typeof availableHelpers;

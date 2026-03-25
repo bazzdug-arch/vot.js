@@ -8,11 +8,11 @@ export default {
   "hostVOT": "vot.toil.cc/v1",
   "hostWorker": "vot-worker.toil.cc",
   "mediaProxy": "media-proxy.toil.cc",
-  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 YaBrowser/25.12.0.0 Safari/537.36",
-  "componentVersion": "25.12.4.1198",
+  "userAgent": " Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 YaBrowser/26.3.1.981 Yowser/2.5 Safari/537.36",
+  "componentVersion": "26.3.1.981",
   "hmac": "bt8xH3VOlb4mqf0nqAibnDOoiPlXsisf",
-  "defaultDuration": 343,
+  "defaultDuration": 310,
   "minChunkSize": 5295308,
   "loggerLevel": 1,
-  "version": "2.4.14"
+  "version": "2.4.16"
 } as ConfigSchema

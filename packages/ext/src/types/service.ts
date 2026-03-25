@@ -12,9 +12,11 @@ export enum ExtVideoService {
   douyin = "douyin",
   artstation = "artstation",
   kickstarter = "kickstarter",
+  datacamp = "datacamp",
   oraclelearn = "oraclelearn",
   deeplearningai = "deeplearningai",
   netacad = "netacad",
+  mediafile = "mediafile",
 }
 
 export const VideoService = {

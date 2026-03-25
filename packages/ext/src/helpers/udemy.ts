@@ -164,9 +164,30 @@ export default class UdemyHelper extends BaseHelper {
 
   getLectureId(videoId?: string) {
     const lectureIdRe =
-      /(?:\/learn\/(?:v4\/t\/)?lecture\/|#\/?lecture\/|\/lecture\/view\/\?(?:[^#]*?&)*lecture(?:_|)id=)(\d+)/i;
+      /(?:\/learn\/(?:v4\/t\/)?lecture\/|#\/?lecture\/)(\d+)/i;
+    const lectureViewIdRe = /\/lecture\/view\/\?/i;
+    const href = window.location.href;
+    const lectureViewSearchParams = lectureViewIdRe.test(href)
+      ? new URL(href).searchParams
+      : undefined;
+    const lectureViewId = lectureViewSearchParams
+      ? (() => {
+          for (const [key, value] of lectureViewSearchParams) {
+            const normalizedKey = key.toLowerCase();
+            if (
+              normalizedKey === "lectureid" ||
+              normalizedKey === "lecture_id"
+            ) {
+              return value;
+            }
+          }
+          return undefined;
+        })()
+      : undefined;
+
     return (
-      lectureIdRe.exec(window.location.href)?.[1] ??
+      lectureIdRe.exec(href)?.[1] ??
+      lectureViewId ??
       (videoId ? lectureIdRe.exec(`/${videoId}`)?.[1] : undefined)
     );
   }

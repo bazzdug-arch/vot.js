@@ -52,6 +52,11 @@ describe("youtube", () => {
       await normalize("https://m.youtube.com/watch?v=LK6nLR1bzpI"),
     ).toEqual(expected);
   });
+  test("tv hash route", async () => {
+    expect(
+      await normalize("https://www.youtube.com/tv#/watch?v=LK6nLR1bzpI"),
+    ).toEqual(expected);
+  });
   test("invidious", async () => {
     expect(await normalize("https://yewtu.be/watch?v=LK6nLR1bzpI")).toEqual(
       expected,
@@ -61,6 +66,11 @@ describe("youtube", () => {
     expect(await normalize("https://piped.video/watch?v=LK6nLR1bzpI")).toEqual(
       expected,
     );
+  });
+  test("preservetube", async () => {
+    expect(
+      await normalize("https://preservetube.com/watch?v=LK6nLR1bzpI"),
+    ).toEqual("https://preservetube.com/watch?v=LK6nLR1bzpI");
   });
 });
 
@@ -945,6 +955,42 @@ describe("zdf", () => {
     );
     expect(normalized).toEqual(expected);
   });
+});
+
+describe("jove", () => {
+  const expected =
+    "https://app.jove.com/v/10261/preparing-and-administering-intramuscular-injections";
+  const localizedPublicUrls = [
+    "https://www.jove.com/cn/v/10199/basic-life-support-cardiopulmonary-resuscitation-and-defibrillation",
+  ] as const;
+  const localizedExpected =
+    "https://app.jove.com/v/10199/basic-life-support-cardiopulmonary-resuscitation-and-defibrillation";
+
+  test("canonical", async () => {
+    expect(await normalize(expected)).toEqual(expected);
+  });
+
+  test("localized path + query", async () => {
+    expect(
+      await normalize(
+        "https://app.jove.com/pl/v/10261/preparing-and-administering-intramuscular-injections?trialstart=1&section=4",
+      ),
+    ).toEqual(expected);
+  });
+
+  test("www domain", async () => {
+    expect(
+      await normalize(
+        "https://www.jove.com/v/10261/preparing-and-administering-intramuscular-injections",
+      ),
+    ).toEqual(expected);
+  });
+
+  for (const localizedUrl of localizedPublicUrls) {
+    test(`localized public domain ${new URL(localizedUrl).pathname.split("/")[1]}`, async () => {
+      expect(await normalize(localizedUrl)).toEqual(localizedExpected);
+    });
+  }
 });
 
 describe("cloudflare stream", () => {

@@ -19,6 +19,37 @@ export default class YoutubeHelper extends BaseHelper {
       }
     }
 
+    const rawHash = url.hash.replace(/^#/, "");
+    if (rawHash) {
+      const normalizedHash = rawHash.startsWith("!")
+        ? rawHash.slice(1)
+        : rawHash;
+      let decodedHash = normalizedHash;
+      try {
+        decodedHash = decodeURIComponent(normalizedHash);
+      } catch {
+        // ignore malformed URL-encoding
+      }
+
+      try {
+        const hashUrl = decodedHash.startsWith("http")
+          ? new URL(decodedHash)
+          : new URL(
+              decodedHash.startsWith("/") ? decodedHash : `/${decodedHash}`,
+              url.origin,
+            );
+        const hashVideoId = YoutubeHelper.extractVideoId(hashUrl);
+        if (hashVideoId) {
+          return hashVideoId;
+        }
+      } catch {
+        const hashVideoId = /(?:^|[?&#])v=([^&#]+)/.exec(decodedHash)?.[1];
+        if (hashVideoId) {
+          return hashVideoId;
+        }
+      }
+    }
+
     // youtu.be/<id>
     if (url.hostname === "youtu.be") {
       const id = url.pathname.replace(/^\/+/, "").split("/")[0];

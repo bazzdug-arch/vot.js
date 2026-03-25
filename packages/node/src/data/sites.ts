@@ -28,6 +28,11 @@ export default [
     match: sitesPiped,
   },
   {
+    host: CoreVideoService.preservetube,
+    url: "https://preservetube.com/watch?v=",
+    match: /^preservetube\.com$/,
+  },
+  {
     host: CoreVideoService.zdf,
     url: "https://www.zdf.de/play/",
     match: [/^zdf.de$/, /^(www.)?zdf.de$/],
@@ -321,6 +326,11 @@ export default [
     host: CoreVideoService.watchpornto,
     url: "https://watchporn.to/",
     match: /^watchporn.to$/,
+  },
+  {
+    host: CoreVideoService.jove,
+    url: "https://jove.com/",
+    match: /^(?:app|www)\.jove\.com$/,
   },
   {
     host: CoreVideoService.linkedin,

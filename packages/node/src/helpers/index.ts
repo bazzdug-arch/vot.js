@@ -22,6 +22,7 @@ import GoogleDriveHelper from "./googledrive";
 import IgnHelper from "./ign";
 import IMDBHelper from "./imdb";
 import IncestflixHelper from "./incestflix";
+import JoveHelper from "./jove";
 import KickHelper from "./kick";
 import KodikHelper from "./kodik";
 import LinkedinHelper from "./linkedin";
@@ -83,6 +84,7 @@ export * as GoogleDriveHelper from "./googledrive";
 export * as IgnHelper from "./ign";
 export * as IMDBHelper from "./imdb";
 export * as IncestflixHelper from "./incestflix";
+export * as JoveHelper from "./jove";
 export * as KickHelper from "./kick";
 export * as KodikHelper from "./kodik";
 export * as LinkedinHelper from "./linkedin";
@@ -139,6 +141,7 @@ export const availableHelpers = {
   [CoreVideoService.coursehunterLike]: CoursehunterLikeHelper,
   [CoreVideoService.twitch]: TwitchHelper,
   [CoreVideoService.sap]: SapHelper,
+  [CoreVideoService.jove]: JoveHelper,
   [CoreVideoService.linkedin]: LinkedinHelper,
   [CoreVideoService.vimeo]: VimeoHelper,
   [CoreVideoService.yandexdisk]: YandexDiskHelper,
@@ -173,6 +176,7 @@ export const availableHelpers = {
   [CoreVideoService.proxitok]: TikTokHelper,
   [CoreVideoService.nine_gag]: NineGAGHelper,
   [CoreVideoService.youtube]: YoutubeHelper,
+  [CoreVideoService.preservetube]: YoutubeHelper,
   [CoreVideoService.invidious]: YoutubeHelper,
   [CoreVideoService.piped]: YoutubeHelper,
   [CoreVideoService.zdf]: ZDFHelper,
