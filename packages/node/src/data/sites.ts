@@ -44,7 +44,7 @@ export default [
   },
   {
     host: CoreVideoService.vk,
-    url: "https://vk.com/video?z=",
+    url: "https://vk.com/",
     match: [/^(www\.|m\.)?vk\.(com|ru)$/, /^(.*\.)?vkvideo\.ru$/],
   },
   {
@@ -271,7 +271,7 @@ export default [
   {
     host: CoreVideoService.kodik,
     url: "stub",
-    match: /^kodik.(info|biz|cc)$/,
+    match: /^kodikplayer.com$/,
     needExtraData: true,
   },
   {

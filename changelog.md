@@ -1,3 +1,28 @@
+# 2.4.17
+
+## Ext
+
+- Separated YouTube embed handling from regular watch URLs
+- Refined VK URL normalization to use path-based video and clip routes instead of `video?z=` rewriting
+- Updated site match rules and selectors for VK, Dzen, and Kodik
+- Archive.org now returns direct download URLs and translation hints
+- Reddit now resolves videos through the API and DASH audio manifests instead of DOM scraping
+- Odysee, Coursehunter-like, and DataCamp parsing were tightened for more reliable canonical URLs and media extraction
+
+## Node
+
+- Mirrored VK normalization and Kodik matcher updates in the runtime package
+- Removed special VK URL rebuilding from `videoData` normalization
+
+## Shared
+
+- Updated runtime config to the new media proxy, browser UA, and component version
+- Removed the shared VK URL builder utility
+
+## Tests
+
+- Updated `videoData` coverage for VK and Kodik URL normalization changes
+
 # 2.4.16
 
 ## Ext

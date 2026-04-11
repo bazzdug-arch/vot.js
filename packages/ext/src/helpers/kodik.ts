@@ -141,7 +141,7 @@ export default class KodikHelper extends BaseHelper {
       }),
     );
 
-    return `https:${decryptedUrl}`;
+    return `${decryptedUrl}`;
   }
 
   async getVideoData(videoId: string): Promise<MinimalVideoData | undefined> {
@@ -168,7 +168,7 @@ export default class KodikHelper extends BaseHelper {
 
     return {
       url: videoLink.src.startsWith("//")
-        ? `https:${videoLink.src}`
+        ? `${videoLink.src}`
         : this.decryptUrl(videoLink.src),
     };
   }

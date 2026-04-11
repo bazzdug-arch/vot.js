@@ -18,7 +18,9 @@ export default class DataCampHelper extends VideoJSHelper {
     >;
   } | null {
     try {
-      const input = document.getElementById("videoData");
+      const input =
+        document.querySelector("#slideDeckData") ||
+        document.getElementById("videoData");
       if (
         !input ||
         (!(input instanceof HTMLInputElement) &&
@@ -84,8 +86,7 @@ export default class DataCampHelper extends VideoJSHelper {
       meta?.plain_video_mp4_link ??
       meta?.plain_video_hls_link ??
       meta?.video_mp4_link ??
-      meta?.video_hls_link ??
-      data.url;
+      meta?.video_hls_link;
 
     if (!videoUrl) {
       return undefined;

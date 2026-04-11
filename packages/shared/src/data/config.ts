@@ -4,15 +4,16 @@
 import type { ConfigSchema } from "../types/data";
 
 export default {
-  "host": "api.browser.yandex.ru",
-  "hostVOT": "vot.toil.cc/v1",
-  "hostWorker": "vot-worker.toil.cc",
-  "mediaProxy": "media-proxy.toil.cc",
-  "userAgent": " Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 YaBrowser/26.3.1.981 Yowser/2.5 Safari/537.36",
-  "componentVersion": "26.3.1.981",
-  "hmac": "bt8xH3VOlb4mqf0nqAibnDOoiPlXsisf",
-  "defaultDuration": 310,
-  "minChunkSize": 5295308,
-  "loggerLevel": 1,
-  "version": "2.4.16"
-} as ConfigSchema
+  host: "api.browser.yandex.ru",
+  hostVOT: "vot.toil.cc/v1",
+  hostWorker: "vot-worker.toil.cc",
+  mediaProxy: "media-proxy.transly.workers.dev",
+  userAgent:
+    " Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 YaBrowser/26.3.3.869 Yowser/2.5 Safari/537.36",
+  componentVersion: "26.3.3.869",
+  hmac: "bt8xH3VOlb4mqf0nqAibnDOoiPlXsisf",
+  defaultDuration: 310,
+  minChunkSize: 5295308,
+  loggerLevel: 1,
+  version: "2.4.17",
+} as ConfigSchema;

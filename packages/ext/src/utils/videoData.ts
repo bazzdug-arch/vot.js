@@ -16,22 +16,6 @@ import type { ServiceConf, VideoService } from "../types/service";
 function hasHelper(host: string): host is keyof AvailableVideoHelpers {
   return host in availableHelpers;
 }
-
-function buildVkVideoUrl(videoId: string, sourceUrl: URL): string {
-  const cleanedVideoId = videoId.replace(/^\/+/, "");
-  const out = new URL("https://vk.com/video");
-  out.searchParams.set("z", cleanedVideoId);
-
-  for (const key of ["list", "access_key"]) {
-    const value = sourceUrl.searchParams.get(key);
-    if (value) {
-      out.searchParams.set(key, value);
-    }
-  }
-
-  return out.toString();
-}
-
 export function getService() {
   if (localLinkRe.exec(window.location.href)) {
     return [];
@@ -106,14 +90,6 @@ export async function getVideoData(
   }
 
   if (!service.needExtraData) {
-    if (service.host === CoreVideoService.vk) {
-      return {
-        url: buildVkVideoUrl(videoId, currentUrl),
-        videoId,
-        host: service.host,
-        duration: undefined,
-      };
-    }
     return {
       url: service.url + videoId,
       videoId,
@@ -138,10 +114,7 @@ export async function getVideoData(
 
   return {
     ...result,
-    url:
-      service.host === CoreVideoService.vk
-        ? buildVkVideoUrl(videoId, currentUrl)
-        : result.url,
+    url: result.url,
     videoId,
     host: service.host,
   };

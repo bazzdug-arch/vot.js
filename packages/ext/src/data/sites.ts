@@ -43,8 +43,20 @@ export default [
   {
     host: CoreVideoService.youtube,
     url: "https://youtu.be/",
-    match: /^(www.)?youtube(-nocookie|kids)?.com$/,
+    match: (url: URL) =>
+      /^(www.)?youtube(-nocookie|kids)?.com$/.test(url.host) &&
+      !url.pathname.startsWith("/embed/"),
     selector: ".html5-video-container:not(#inline-player *)",
+    needExtraData: true,
+  },
+  {
+    host: CoreVideoService.youtube,
+    url: "https://youtu.be/",
+    additionalData: "embed",
+    match: (url: URL) =>
+      /^(www.)?youtube(-nocookie|kids)?.com$/.test(url.host) &&
+      url.pathname.startsWith("/embed/"),
+    selector: "html",
     needExtraData: true,
   },
   {
@@ -83,7 +95,7 @@ export default [
   {
     additionalData: "mobile",
     host: CoreVideoService.vk,
-    url: "https://vk.com/video?z=",
+    url: "https://vk.com/",
     match: [/^m.vk.(com|ru)$/, /^m.vkvideo.ru$/],
     selector: sharedSelectors.vkVideoPlayer,
     shadowRoot: true,
@@ -92,14 +104,14 @@ export default [
   {
     additionalData: "clips",
     host: CoreVideoService.vk,
-    url: "https://vk.com/video?z=",
+    url: "https://vk.com/",
     match: /^(www.|m.)?vk.(com|ru)$/,
     selector: 'div[data-testid="clipcontainer-video"]',
     needExtraData: true,
   },
   {
     host: CoreVideoService.vk,
-    url: "https://vk.com/video?z=",
+    url: "https://vk.com/",
     match: [/^(www\.|m\.)?vk\.(com|ru)$/, /^(.*\.)?vkvideo\.ru$/],
     selector: sharedSelectors.vkVideoPlayer,
     needExtraData: true,
@@ -339,7 +351,6 @@ export default [
     match:
       /^disk.yandex.(ru|kz|com(\.(am|ge|tr))?|by|az|co\.il|ee|lt|lv|md|net|tj|tm|uz)$/,
     selector: ".video-player__player > div:nth-child(1)",
-    eventSelector: ".video-player__player",
     needBypassCSP: true,
     needExtraData: true,
   },
@@ -354,7 +365,7 @@ export default [
     host: CoreVideoService.googledrive,
     url: "https://drive.google.com/file/d/",
     match: /^youtube.googleapis.com$/,
-    selector: ".html5-video-container",
+    selector: "html",
   },
   {
     host: CoreVideoService.bannedvideo,
@@ -412,11 +423,12 @@ export default [
     url: "https://archive.org/details/",
     match: /^archive.org$/,
     selector: sharedSelectors.jwPlayer,
+    needExtraData: true,
   },
   {
     host: CoreVideoService.kodik,
     url: "stub",
-    match: /^kodik.(info|biz|cc)$/,
+    match: /^kodikplayer.com$/,
     selector: sharedSelectors.flowplayer,
     needExtraData: true,
   },
@@ -472,7 +484,7 @@ export default [
     host: CoreVideoService.odysee,
     url: "stub",
     match: /^odysee.com$/,
-    selector: sharedSelectors.videoJsUniversal,
+    selector: ".video-js-parent",
     needExtraData: true,
   },
   {

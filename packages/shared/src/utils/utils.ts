@@ -225,29 +225,3 @@ export function proxyMedia(url: URL | string, format: "mp4" | "webm" = "mp4") {
     url.origin
   }`;
 }
-
-/**
- * Build a canonical VK video URL.
- *
- * VK uses multiple URL shapes (`vk.com`, `vkvideo.ru`, path-based ids and
- * `video?z=...`). Inside this project we normalize to:
- *   https://vk.com/video?z=<video-or-clip-id>
- *
- * Some entries require additional query params to be accessible; preserve the
- * known access-affecting ones.
- */
-export function buildVkVideoUrl(videoId: string, sourceUrl: URL): string {
-  const cleanedVideoId = videoId.replace(/^\/+/, "");
-  const out = new URL("https://vk.com/video");
-  out.searchParams.set("z", cleanedVideoId);
-
-  // Preserve only params that are known to affect access / resolution.
-  for (const key of ["list", "access_key"]) {
-    const value = sourceUrl.searchParams.get(key);
-    if (value) {
-      out.searchParams.set(key, value);
-    }
-  }
-
-  return out.toString();
-}

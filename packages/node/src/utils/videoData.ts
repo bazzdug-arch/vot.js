@@ -5,7 +5,6 @@ import {
 } from "@vot.js/core/types/service";
 import { localLinkRe, VideoDataError } from "@vot.js/core/utils/videoData";
 import Logger from "@vot.js/shared/utils/logger";
-import { buildVkVideoUrl } from "@vot.js/shared/utils/utils";
 
 import sites from "../data/sites";
 import VideoHelper, {
@@ -105,14 +104,6 @@ export async function getVideoData(
   }
 
   if (!service.needExtraData) {
-    if (service.host === CoreVideoService.vk) {
-      return {
-        url: buildVkVideoUrl(videoId, enteredURL),
-        videoId,
-        host: service.host,
-        duration: undefined,
-      };
-    }
     return {
       url: service.url + videoId,
       videoId,
@@ -137,10 +128,7 @@ export async function getVideoData(
 
   return {
     ...result,
-    url:
-      service.host === CoreVideoService.vk
-        ? buildVkVideoUrl(videoId, enteredURL)
-        : result.url,
+    url: result.url,
     videoId,
     host: service.host,
   };

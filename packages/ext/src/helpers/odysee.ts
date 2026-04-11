@@ -1,27 +1,12 @@
-import Logger from "@vot.js/shared/utils/logger";
 import type { MinimalVideoData } from "../types/client";
-import { BaseHelper, VideoHelperError } from "./base";
+import { BaseHelper } from "./base";
 
 export default class OdyseeHelper extends BaseHelper {
   API_ORIGIN = "https://odysee.com";
 
   async getVideoData(videoId: string): Promise<MinimalVideoData | undefined> {
-    try {
-      const res = await this.fetch(`${this.API_ORIGIN}/${videoId}`);
-      const content = await res.text();
-      const url = /"contentUrl":(\s)?"([^"]+)"/.exec(content)?.[2];
-      if (!url) {
-        throw new VideoHelperError("Odysee url doesn't parsed");
-      }
-
-      return { url };
-    } catch (err) {
-      Logger.error(
-        `Failed to get odysee video data by video ID: ${videoId}`,
-        (err as Error).message,
-      );
-      return undefined;
-    }
+    const url = `${this.API_ORIGIN}/${videoId}`.replace(/:[a-zA-Z0-9]+$/, "");
+    return { url };
   }
 
   // eslint-disable-next-line @typescript-eslint/require-await

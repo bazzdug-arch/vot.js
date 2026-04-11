@@ -79,16 +79,26 @@ export default class CoursehunterLikeHelper extends BaseHelper {
       return undefined;
     }
 
-    return {
-      url: proxyMedia(videoUrl),
+    const VideoData: MinimalVideoData & {
+      video_url: string;
+    } = {
+      url: videoId,
+      video_url: videoUrl,
+      translationHelp: [
+        {
+          target: "video_file_url",
+          targetUrl: proxyMedia(videoUrl),
+        },
+      ],
       duration,
       title,
     };
+
+    return VideoData;
   }
 
   // eslint-disable-next-line @typescript-eslint/require-await
   async getVideoId(url: URL) {
-    const courseId = /course\/([^/]+)/.exec(url.pathname)?.[0];
-    return courseId ? courseId + url.search : undefined;
+    return url.href;
   }
 }

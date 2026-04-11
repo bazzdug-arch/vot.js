@@ -75,58 +75,58 @@ describe("youtube", () => {
 });
 
 describe("vk", () => {
-  const expected = "https://vk.com/video?z=video-197217619_456239151";
+  const expected = "https://vk.com/video-197217619_456239151";
   test("video", async () => {
     expect(await normalize(expected)).toEqual(expected);
   });
   test("video with channel/group", async () => {
     expect(
       await normalize(
-        "https://vk.com/video/@hololivepics?z=video-197217619_456239151",
+        "https://vk.com//video/@hololivepics?z=video-197217619_456239151",
       ),
     ).toEqual(expected);
   });
   test("video short", async () => {
-    expect(await normalize("https://vk.com/video-197217619_456239151")).toEqual(
+    expect(await normalize("https://vk.com//video-197217619_456239151")).toEqual(
       expected,
     );
   });
   test("video playlist", async () => {
     expect(
       await normalize(
-        "https://vkvideo.ru/playlist/-36637441_9/video-36637441_456240372",
+        "https://vk.com/playlist/-36637441_9/video-36637441_456240372",
       ),
-    ).toEqual("https://vk.com/video?z=video-36637441_456240372");
+    ).toEqual("https://vk.com/video-36637441_456240372");
   });
   test("with club id", async () => {
     expect(
       await normalize(
-        "https://vk.com/videos-77521?z=video-77521_162222515%2Fclub77521",
+        "https://vk.com//videos-77521?z=video-77521_162222515%2Fclub77521",
       ),
-    ).toEqual("https://vk.com/video?z=video-77521_162222515");
+    ).toEqual("https://vk.com/video-77521_162222515");
   });
   test("solid long video id", async () => {
     expect(
-      await normalize("https://vkvideo.ru/video1036523373_456239034"),
-    ).toEqual("https://vk.com/video?z=video1036523373_456239034");
+      await normalize("https://vk.com/video1036523373_456239034"),
+    ).toEqual("https://vk.com/video1036523373_456239034");
   });
   test("embed", async () => {
     expect(
       await normalize(
-        "https://vk.com/video_ext.php?oid=-77521&id=162222515&hash=87b046504ccd8bfa",
+        "https://vk.com//video_ext.php?oid=-77521&id=162222515&hash=87b046504ccd8bfa",
       ),
-    ).toEqual("https://vk.com/video?z=video-77521_162222515");
+    ).toEqual("https://vk.com/video-77521_162222515");
   });
   test("clips", async () => {
     expect(
       await normalize(
-        "https://vk.com/clips-74006511?z=clip-74006511_456247211",
+        "https://vk.com//clips-74006511?z=clip-74006511_456247211",
       ),
-    ).toEqual("https://vk.com/video?z=clip-74006511_456247211");
+    ).toEqual("https://vk.com/clip-74006511_456247211");
   });
   test("solid clip id", async () => {
-    expect(await normalize("https://vk.com/clip30014565_456240946")).toEqual(
-      "https://vk.com/video?z=clip30014565_456240946",
+    expect(await normalize("https://vk.com//clip30014565_456240946")).toEqual(
+      "https://vk.com/clip30014565_456240946",
     );
   });
 });
@@ -761,21 +761,21 @@ describe("kodik", () => {
   test("seria", async () => {
     expect(
       await normalize(
-        "https://kodik.info/seria/864861/1f1f70ee75bbb2f1806e90db27ec151b/720p?translations=false&min_age=18",
+        "https://kodikplayer.com/seria/864861/1f1f70ee75bbb2f1806e90db27ec151b/720p?translations=false&min_age=18",
       ),
     ).toEndWith(".mp4:hls:manifest.m3u8");
   });
   test("serial", async () => {
     expect(
       await normalize(
-        "https://kodik.info/serial/31656/60a52cca719ac3447cdba400c1b80b40/720p",
+        "https://kodikplayer.com/serial/31656/60a52cca719ac3447cdba400c1b80b40/720p",
       ),
     ).toEndWith(".mp4:hls:manifest.m3u8");
   });
   test("video", async () => {
     expect(
       await normalize(
-        "https://kodik.biz/video/9935/313bc89421b094f6f374cc7420e00ad1/720p?translations=false&min_age=16",
+        "https://kodikplayer.com/video/9935/313bc89421b094f6f374cc7420e00ad1/720p?translations=false&min_age=16",
       ),
     ).toEndWith(".mp4:hls:manifest.m3u8");
   });

@@ -6,7 +6,7 @@ import type { MinimalVideoData } from "../types/client";
 import { BaseHelper, VideoHelperError } from "./base";
 
 export default class KodikHelper extends BaseHelper {
-  API_ORIGIN = "https://kodik.biz";
+  API_ORIGIN = "https://kodikplayer.com/";
 
   async getSecureData(videoPath: string): Promise<Kodik.SecureData | false> {
     try {
