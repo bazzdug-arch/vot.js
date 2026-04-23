@@ -8,9 +8,9 @@ export default class DeeplearningAIHelper extends BaseHelper {
       return undefined;
     }
 
-    const sourceUrl = this.video.querySelector<HTMLSourceElement>(
-      'source[type="application/x-mpegurl"]',
-    )?.src;
+    const sourceUrl = this.video
+      .querySelector<HTMLSourceElement>('source[type="application/x-mpegurl"]')
+      ?.src.replace(/\.m3u8/, "_360p.mp4");
     if (!sourceUrl) {
       return undefined;
     }

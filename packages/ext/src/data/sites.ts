@@ -692,6 +692,13 @@ export default [
     needExtraData: true,
   },
   {
+    host: ExtVideoService.skilljar,
+    url: "https://anthropic.skilljar.com/",
+    match: /skilljar\.com$/,
+    selector: sharedSelectors.jwPlayer,
+    needExtraData: true,
+  },
+  {
     host: CoreVideoService.custom,
     url: "stub",
     match: (url: URL) => /([^.]+)\.(mp4|webm)/.test(url.pathname),

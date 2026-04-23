@@ -17,6 +17,7 @@ export enum ExtVideoService {
   deeplearningai = "deeplearningai",
   netacad = "netacad",
   mediafile = "mediafile",
+  skilljar = "skilljar",
 }
 
 export const VideoService = {

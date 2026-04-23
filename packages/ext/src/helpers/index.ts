@@ -56,6 +56,7 @@ import Rule34VideoHelper from "./rule34video";
 import RumbleHelper from "./rumble";
 import RutubeHelper from "./rutube";
 import SapHelper from "./sap";
+import SkilljarHelper from "./skilljar";
 import SpankBangHelper from "./spankbang";
 import TelegramHelper from "./telegram";
 import ThisVidHelper from "./thisvid";
@@ -129,6 +130,7 @@ export * as Rule34VideoHelper from "./rule34video";
 export * as RumbleHelper from "./rumble";
 export * as RutubeHelper from "./rutube";
 export * as SapHelper from "./sap";
+export * as SkilljarHelper from "./skilljar";
 export * as SpankBangHelper from "./spankbang";
 export * as TelegramHelper from "./telegram";
 export * as ThisVidHelper from "./thisvid";
@@ -226,6 +228,7 @@ export const availableHelpers = {
   [ExtVideoService.deeplearningai]: DeeplearningAIHelper,
   [ExtVideoService.netacad]: NetacadHelper,
   [ExtVideoService.mediafile]: MediafileHelper,
+  [ExtVideoService.skilljar]: SkilljarHelper,
 };
 
 export type AvailableVideoHelpers = typeof availableHelpers;
