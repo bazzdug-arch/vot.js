@@ -35,10 +35,17 @@ export default class DailymotionHelper extends BaseHelper {
   }
 
   async getVideoId(url: URL): Promise<string | undefined> {
+    const videoIdFromUrl = this.getVideoIdFromUrl(url);
+    if (videoIdFromUrl) {
+      return videoIdFromUrl;
+    }
+
     if (window.self !== window.top) {
       return await this.resolveVideoIdViaPostMessage();
-    } else {
-      return this.getVideoIdFromUrl(url);
     }
+
+    return url.hostname === "dai.ly"
+      ? url.pathname.slice(1)
+      : /video\/([^/]+)/.exec(url.pathname)?.[1];
   }
 }

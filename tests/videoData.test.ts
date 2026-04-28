@@ -568,6 +568,13 @@ describe("dailymotion", () => {
   test("short", async () => {
     expect(await normalize("https://dai.ly/x8rikn3")).toEqual(expected);
   });
+  test("geo player", async () => {
+    expect(
+      await normalize(
+        "https://geo.dailymotion.com/player/x19jsm.html?video=x8rikn3",
+      ),
+    ).toEqual(expected);
+  });
 });
 
 describe("niconico", () => {
