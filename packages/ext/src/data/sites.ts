@@ -315,6 +315,13 @@ export default [
     selector: "#b-video-wrapper",
   },
   {
+    host: CoreVideoService.cloudmailru,
+    url: "https://cloud.mail.ru/",
+    match: /^cloud\.mail\.ru$/,
+    selector: sharedSelectors.videoJsUniversal,
+    needExtraData: true,
+  },
+  {
     host: CoreVideoService.bitchute,
     url: "https://www.bitchute.com/video/",
     match: /^(www.)?bitchute.com$/,

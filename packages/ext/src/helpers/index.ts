@@ -13,6 +13,7 @@ import BitviewHelper from "./bitview";
 import BunkrHelper from "./bunkr";
 import BunnyStreamHelper from "./bunnystream";
 import CloudflareStreamHelper from "./cloudflarestream";
+import CloudMailRuHelper from "./cloudmailru";
 import CoursehunterLikeHelper from "./coursehunterLike";
 import CourseraHelper from "./coursera";
 import DailymotionHelper from "./dailymotion";
@@ -87,6 +88,7 @@ export * as BitviewHelper from "./bitview";
 export * as BunkrHelper from "./bunkr";
 export * as BunnyStreamHelper from "./bunnystream";
 export * as CloudflareStreamHelper from "./cloudflarestream";
+export * as CloudMailRuHelper from "./cloudmailru";
 export * as CoursehunterLikeHelper from "./coursehunterLike";
 export * as CourseraHelper from "./coursera";
 export * as DailymotionHelper from "./dailymotion";
@@ -208,6 +210,7 @@ export const availableHelpers = {
   [CoreVideoService.zdf]: ZDFHelper,
   [CoreVideoService.dzen]: DzenHelper,
   [CoreVideoService.bunnystream]: BunnyStreamHelper,
+  [CoreVideoService.cloudmailru]: CloudMailRuHelper,
   [CoreVideoService.cloudflarestream]: CloudflareStreamHelper,
   [CoreVideoService.loom]: LoomHelper,
   [CoreVideoService.rtnews]: RtNewsHelper,
